@@ -1,0 +1,10 @@
+name: Assassin
+version: ${project.version}
+main: cloud.lagrange.assassin.Assassin
+api-version: 1.13
+authors: [NateKomodo]
+description: A replica of the assassin game mode from Dream's video
+commands:
+  assassin:
+    description: Sets player groups for the assassin game mode
+    usage: /assassin <assassin/speedrunner> <add/remove> <player>
