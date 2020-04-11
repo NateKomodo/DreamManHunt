@@ -11,8 +11,8 @@ public final class Assassin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-    	TeamManager manager = new TeamManager(this);
-    	getCommand("assassin").setExecutor(new Commands(this, manager));
+        TeamManager manager = new TeamManager(this);
+        getCommand("assassin").setExecutor(new Commands(this, manager));
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         new Worker(this);
         new Config(this);

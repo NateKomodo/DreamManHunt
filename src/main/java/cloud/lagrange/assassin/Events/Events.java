@@ -67,18 +67,4 @@ public class Events implements Listener {
             e.setCancelled(true);
         }
     }
-<<<<<<< Updated upstream
-=======
-    
-    @EventHandler(priority= EventPriority.HIGH)
-    public void onPlayerRespawnEvent(PlayerRespawnEvent e) {
-    	Player player = e.getPlayer();
-    	if (Global.Players.stream().anyMatch(p -> p.role == Role._ASSASSIN_ && 
-    		p.UUID.equals(player.getUniqueId()))) {
-    		
-    		PlayerInventory inventory = player.getInventory();
-    		inventory.addItem(new ItemStack(Material.COMPASS, 1));
-    	}
-    }
->>>>>>> Stashed changes
 }

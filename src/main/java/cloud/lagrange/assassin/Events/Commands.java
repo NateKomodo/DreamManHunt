@@ -33,7 +33,7 @@ public class Commands implements CommandExecutor {
                 Proccess(sender, args[0], args[1], args[2]);
                 return true;
             } else {
-            	sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>. /assassin on its own will display debug info and reload config");
+                sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>. /assassin on its own will display debug info and reload config");
                 sender.sendMessage("Current: ");
                 Global.Players.stream().forEach(p -> sender.sendMessage(p.UUID + " as " + p.role));
                 new Config(parent);
@@ -43,7 +43,7 @@ public class Commands implements CommandExecutor {
         return false;
     }
     private void Proccess(CommandSender sender, String role, String action, String player) {
-    	Role r = null;
+        Role r = null;
         Action a = null;
         if (role.equals("assassin")) r = Role._ASSASSIN_; else if (role.equals("speedrunner")) r = Role._SPEEDRUNNER_; else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
         if (action.equals("add")) a = Action.ADD; else if (action.equals("remove")) a = Action.REMOVE; else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
@@ -62,16 +62,8 @@ public class Commands implements CommandExecutor {
                     newP.role = r;
                     newP.UUID = UUID;
                     Global.Players.add(newP);
-<<<<<<< Updated upstream
-=======
-                    if (r == Role._ASSASSIN_) {                    	
-                    	PlayerInventory inventory = thePlayer.getInventory();
-                    	inventory.addItem(new ItemStack(Material.COMPASS ,1));
-                    }
-                    
-                    
+
                     this.teamManager.addPlayer(r, thePlayer);
->>>>>>> Stashed changes
                 }
                 sender.sendMessage(ChatColor.GREEN + "Added player to group " + role);
                 break;
