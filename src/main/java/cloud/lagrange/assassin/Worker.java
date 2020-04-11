@@ -17,13 +17,13 @@ public class Worker {
     public Worker(Assassin parent) {
         parent.getServer().getScheduler().scheduleSyncRepeatingTask(parent, () -> {
             ArrayList<String> frozeThisTick = new ArrayList<>();
-            if (Config.freeze) Global.Players.stream().filter(p -> p.role == Role.SPEEDRUNNER).forEach(player -> {
+            if (Config.freeze) Global.Players.stream().filter(p -> p.role == Role._SPEEDRUNNER_).forEach(player -> {
                 Player thisPlayer = Bukkit.getPlayer(player.UUID);
                 if (thisPlayer == null) return;
                 Entity target = getTarget(thisPlayer);
                 if (target instanceof Player) {
                     Player playerTarget = (Player) target;
-                    if (Global.Players.stream().anyMatch(p -> p.role == Role.ASSASSIN && p.UUID.equals(playerTarget.getUniqueId()))) {
+                    if (Global.Players.stream().anyMatch(p -> p.role == Role._ASSASSIN_ && p.UUID.equals(playerTarget.getUniqueId()))) {
                         Global.Players.stream().filter(p -> p.UUID.equals(playerTarget.getUniqueId())).findFirst().get().isFrozen = true;
                         frozeThisTick.add(playerTarget.getUniqueId().toString());
                         drawLine(thisPlayer.getEyeLocation(), playerTarget.getEyeLocation(), 1);
@@ -33,7 +33,7 @@ public class Worker {
             Global.Players.stream().filter(p -> p.isFrozen).forEach(player -> {
                 if (!frozeThisTick.contains(player.UUID.toString())) player.isFrozen = false;
             });
-            if (Config.compass) Global.Players.stream().filter(p -> p.role == Role.ASSASSIN).forEach(player -> {
+            if (Config.compass) Global.Players.stream().filter(p -> p.role == Role._ASSASSIN_).forEach(player -> {
                 Player thisPlayer = Bukkit.getPlayer(player.UUID);
                 if (thisPlayer == null) return;
                 Player nearest = getNearestPlayer(thisPlayer);
@@ -48,7 +48,7 @@ public class Worker {
         Player playerNear = null;
         for (Player player2 : Bukkit.getOnlinePlayers()) {
             if (player == player2) { continue; }
-            if (Global.Players.stream().noneMatch(p -> p.UUID.equals(player2.getUniqueId()) && p.role == Role.SPEEDRUNNER)) continue;
+            if (Global.Players.stream().noneMatch(p -> p.UUID.equals(player2.getUniqueId()) && p.role == Role._SPEEDRUNNER_)) continue;
             if (player.getWorld() != player2.getWorld()) { continue; }
 
             Location location = player.getLocation();

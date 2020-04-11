@@ -1,6 +1,6 @@
 package cloud.lagrange.assassin.Models;
 
 public enum Role {
-    ASSASSIN,
-    SPEEDRUNNER,
+    _ASSASSIN_,
+    _SPEEDRUNNER_,
 }
