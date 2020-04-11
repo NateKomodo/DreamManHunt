@@ -11,9 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+
 
 public class Events implements Listener {
     @EventHandler(priority= EventPriority.HIGH)
@@ -66,5 +68,16 @@ public class Events implements Listener {
                 player.UUID.equals(p.getUniqueId()))) {
             e.setCancelled(true);
         }
+    }
+    
+    @EventHandler(priority= EventPriority.HIGH)
+    public void onPlayerRespawnEvent(PlayerRespawnEvent e) {
+    	Player player = e.getPlayer();
+    	if (Global.Players.stream().anyMatch(p -> p.role == Role.ASSASSIN && 
+    		p.UUID.equals(player.getUniqueId()))) {
+    		
+    		PlayerInventory inventory = player.getInventory();
+    		inventory.addItem(new ItemStack(Material.COMPASS, 1));
+    	}
     }
 }
