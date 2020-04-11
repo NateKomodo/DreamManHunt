@@ -61,7 +61,7 @@ public class Commands implements CommandExecutor {
                     newP.role = r;
                     newP.UUID = UUID;
                     Global.Players.add(newP);
-
+                  
                     this.teamManager.addPlayer(r, thePlayer);
                 }
                 sender.sendMessage(ChatColor.GREEN + "Added player to group " + role);
