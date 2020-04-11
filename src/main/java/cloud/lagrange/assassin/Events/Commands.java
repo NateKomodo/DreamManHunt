@@ -10,9 +10,12 @@ import cloud.lagrange.assassin.Models.Role;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 
@@ -61,7 +64,11 @@ public class Commands implements CommandExecutor {
                     newP.role = r;
                     newP.UUID = UUID;
                     Global.Players.add(newP);
-
+                    if (r == Role.ASSASSIN) {                    	
+                    	PlayerInventory inventory = thePlayer.getInventory();
+                    	inventory.addItem(new ItemStack(Material.COMPASS ,1));
+                    }
+                  
                     this.teamManager.addPlayer(r, thePlayer);
                 }
                 sender.sendMessage(ChatColor.GREEN + "Added player to group " + role);
