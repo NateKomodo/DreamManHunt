@@ -40,13 +40,13 @@ public class Events implements Listener {
         }
         if (Global.Players.stream().anyMatch(p -> p.isFrozen &&
                 p.UUID.equals(player.getUniqueId())) &&
-        Global.Players.stream().anyMatch(p -> p.role == Role.SPEEDRUNNER && p.UUID.equals(attacker.getUniqueId()))) {
+        Global.Players.stream().anyMatch(p -> p.role == Role._SPEEDRUNNER_ && p.UUID.equals(attacker.getUniqueId()))) {
             e.setCancelled(true);
             return;
         }
-        if (Global.Players.stream().anyMatch(p -> p.role == Role.ASSASSIN &&
+        if (Global.Players.stream().anyMatch(p -> p.role == Role._ASSASSIN_ &&
                 p.UUID.equals(attacker.getUniqueId())) &&
-                Global.Players.stream().anyMatch(p -> p.role == Role.SPEEDRUNNER &&
+                Global.Players.stream().anyMatch(p -> p.role == Role._SPEEDRUNNER_ &&
                 p.UUID.equals(player.getUniqueId()))) {
             if (Config.instaKill) player.damage(999);
         }
