@@ -64,7 +64,8 @@ public class Commands implements CommandExecutor {
                     newP.role = r;
                     newP.UUID = UUID;
                     Global.Players.add(newP);
-                    if (r == Role.ASSASSIN) {                    	
+
+                    if (r == Role._ASSASSIN_) {                    	
                     	PlayerInventory inventory = thePlayer.getInventory();
                     	inventory.addItem(new ItemStack(Material.COMPASS ,1));
                     }
