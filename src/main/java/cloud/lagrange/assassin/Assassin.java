@@ -16,6 +16,8 @@ public final class Assassin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Events(), this);
         new Worker(this);
         new Config(this);
+
+        Bukkit.broadcastMessage("You are currently using Sudden's assassin plugin. Enjoy. :)");
         
         Bukkit.getLogger().info("Assassin plugin started.");
     }
