@@ -76,8 +76,15 @@ public class Commands implements CommandExecutor {
     private void Proccess(CommandSender sender, String role, String action, String player) {
         Role r = null;
         Action a = null;
-        if (role.equals("assassin")) r = Role._ASSASSIN_; else if (role.equals("speedrunner")) r = Role._SPEEDRUNNER_; // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
-        if (action.equals("add")) a = Action.ADD; else if (action.equals("remove")) a = Action.REMOVE; // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
+        if (role.equals("assassin")) r = Role._ASSASSIN_;
+        else if (role.equals("speedrunner")) r = Role._SPEEDRUNNER_;
+        // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
+        if (action.equals("add")) a = Action.ADD;
+        else if (action.equals("remove")) a = Action.REMOVE;
+        // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
         if (r == null || a == null) return;
         org.bukkit.entity.Player thePlayer = Bukkit.getPlayer(player);
         if (thePlayer == null) sender.sendMessage(ChatColor.RED + "Could not find player!");
@@ -94,13 +101,10 @@ public class Commands implements CommandExecutor {
                     newP.UUID = UUID;
                     Global.Players.add(newP);
 
-                    if (r == Role._ASSASSIN_) {  
-                    	if (Config.giveCompass) {
-	                    	PlayerInventory inventory = thePlayer.getInventory();
-	                    	inventory.addItem(new ItemStack(Material.COMPASS ,1));
-                    	}
-                    }
-                  
+                    if (Config.giveCompass && r == Role._ASSASSIN_) {  
+                    	PlayerInventory inventory = thePlayer.getInventory();
+                    	inventory.addItem(new ItemStack(Material.COMPASS ,1));
+                    }                    
                     this.teamManager.addPlayer(r, thePlayer);
                 }
                 sender.sendMessage(ChatColor.GREEN + "Added player to group " + role);
