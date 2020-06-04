@@ -8,6 +8,8 @@ public class Config {
     public static boolean compass;
     public static boolean giveCompass;
     public static boolean compassParticle;
+    public static boolean compassParticleInNether;
+    public static boolean compassRandomizeInDifferentWorlds;
 
     public Config(Assassin parent) {
     	parent.reloadConfig();
@@ -17,6 +19,8 @@ public class Config {
         compass = (boolean) parent.getConfig().get("compass-tracking");
         giveCompass = (boolean) parent.getConfig().get("compass-give");
         compassParticle = (boolean) parent.getConfig().get("compass-particle");
+        compassParticleInNether = (boolean) parent.getConfig().get("compass-particle-in-nether");
+        compassRandomizeInDifferentWorlds = (boolean) parent.getConfig().get("compass-random-different-worlds");
         freeze = (boolean) parent.getConfig().get("freeze-assassin-when-seen");
     }
 }
