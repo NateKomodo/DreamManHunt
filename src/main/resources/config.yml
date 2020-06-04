@@ -1,3 +1,5 @@
-assassins-insta-kill-speedrunner: true
+assassins-insta-kill-speedrunner: false
 compass-tracking: true
-freeze-assassin-when-seen: true
+compass-give: false
+compass-particle: true
+freeze-assassin-when-seen: false

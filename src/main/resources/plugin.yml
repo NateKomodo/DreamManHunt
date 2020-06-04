@@ -6,5 +6,8 @@ authors: [NateKomodo]
 description: A replica of the assassin game mode from Dream's video
 commands:
   assassin:
-    description: Sets player groups for the assassin game mode
-    usage: /assassin <assassin/speedrunner> <add/remove> <player>
+    description: Sets player as assassin for the assassin game mode
+    usage: /assassin <player> [remove]
+  speedrunner:
+    description: Sets player as speedrunner for the assassin game mode
+    usage: /speedrunner <player> [remove]

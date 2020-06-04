@@ -1,5 +1,4 @@
 package cloud.lagrange.assassin.Events;
-
 import cloud.lagrange.assassin.Config;
 import cloud.lagrange.assassin.Global;
 import cloud.lagrange.assassin.Models.Role;
@@ -75,9 +74,10 @@ public class Events implements Listener {
     	Player player = e.getPlayer();
     	if (Global.Players.stream().anyMatch(p -> p.role == Role._ASSASSIN_ && 
     		p.UUID.equals(player.getUniqueId()))) {
-    		
-    		PlayerInventory inventory = player.getInventory();
-    		inventory.addItem(new ItemStack(Material.COMPASS, 1));
+    		if (Config.giveCompass) {
+	    		PlayerInventory inventory = player.getInventory();
+	    		inventory.addItem(new ItemStack(Material.COMPASS, 1));
+    		}
     	}
     }
 }

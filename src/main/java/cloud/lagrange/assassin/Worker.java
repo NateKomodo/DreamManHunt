@@ -39,6 +39,9 @@ public class Worker {
                 Player nearest = getNearestPlayer(thisPlayer);
                 if (nearest == null) return;
                 thisPlayer.setCompassTarget(nearest.getLocation());
+                if (Config.compassParticle && thisPlayer.getItemInHand().getType() == Material.COMPASS) {
+                	drawDirection(thisPlayer.getLocation(), nearest.getLocation(), 3);
+                }
             });
         }, 1L, 1L);
     }
@@ -115,5 +118,14 @@ public class Worker {
             if (p1.distance(point1.toVector()) > 1 && p1.distance(p2) > 1) world.spawnParticle(Particle.REDSTONE, p1.getX(), p1.getY(), p1.getZ(), 0, 0, 0, 0, dust);
             length += space;
         }
+    }
+    public void drawDirection(Location point1, Location point2, double space) {
+        World world = point1.getWorld();
+        Validate.isTrue(point2.getWorld().equals(world), "Lines cannot be in different worlds!");
+        Vector p1 = point1.toVector();
+        Vector dir = point2.toVector().clone().subtract(p1).setY(0).normalize().multiply(space);
+        Vector p = p1.add(dir);
+        Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1);
+    	world.spawnParticle(Particle.REDSTONE, p.getX(), p1.getY()+1.25, p.getZ(), 0, 0, 0, 0, dust);
     }
 }
