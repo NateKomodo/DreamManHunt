@@ -31,14 +31,43 @@ public class Commands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equals("assassin")) {
-            if (args.length == 3) {
-                Proccess(sender, args[0], args[1], args[2]);
+            if (args.length == 1) {
+                Proccess(sender, "assassin", "add", args[0]);
                 return true;
-            } else {
-                sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>. /assassin on its own will display debug info and reload config");
+            } else if (args.length == 2) {
+            	if (args[1].equals("remove")) {
+	                Proccess(sender, "assassin", "remove", args[0]);
+	                return true;
+            	}
+            	return false;
+            } else if (args.length == 0) {
+                new Config(parent);
+            	sender.sendMessage("Config reloaded");
+                return true;
+            }
+            else {
+                sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <player> [remove]. /assassin on its own will display debug info and reload config");
                 sender.sendMessage("Current: ");
                 Global.Players.stream().forEach(p -> sender.sendMessage(p.UUID + " as " + p.role));
-                new Config(parent);
+                //new Config(parent);
+                return true;
+            }
+        } else if (command.getName().equals("speedrunner")) {
+            if (args.length == 1) {
+                Proccess(sender, "speedrunner", "add", args[0]);
+                return true;
+            } else if (args.length == 2) {
+            	if (args[1].equals("remove")) {
+	                Proccess(sender, "speedrunner", "remove", args[0]);
+	                return true;
+            	}
+            	return false;
+            }
+            else {
+                sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /speedrunner <player> [remove]. Use /assassin on its own to display debug info and reload config");
+                sender.sendMessage("Current: ");
+                Global.Players.stream().forEach(p -> sender.sendMessage(p.UUID + " as " + p.role));
+                //new Config(parent);
                 return true;
             }
         }
@@ -47,8 +76,15 @@ public class Commands implements CommandExecutor {
     private void Proccess(CommandSender sender, String role, String action, String player) {
         Role r = null;
         Action a = null;
-        if (role.equals("assassin")) r = Role._ASSASSIN_; else if (role.equals("speedrunner")) r = Role._SPEEDRUNNER_; else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
-        if (action.equals("add")) a = Action.ADD; else if (action.equals("remove")) a = Action.REMOVE; else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
+        if (role.equals("assassin")) r = Role._ASSASSIN_;
+        else if (role.equals("speedrunner")) r = Role._SPEEDRUNNER_;
+        // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
+        if (action.equals("add")) a = Action.ADD;
+        else if (action.equals("remove")) a = Action.REMOVE;
+        // else sender.sendMessage(ChatColor.RED + "Invalid arguments. Please use /assassin <assassin/speedrunner> <add/remove> <player>");
+        
         if (r == null || a == null) return;
         org.bukkit.entity.Player thePlayer = Bukkit.getPlayer(player);
         if (thePlayer == null) sender.sendMessage(ChatColor.RED + "Could not find player!");
@@ -65,11 +101,10 @@ public class Commands implements CommandExecutor {
                     newP.UUID = UUID;
                     Global.Players.add(newP);
 
-                    if (r == Role._ASSASSIN_) {                    	
+                    if (Config.giveCompass && r == Role._ASSASSIN_) {  
                     	PlayerInventory inventory = thePlayer.getInventory();
                     	inventory.addItem(new ItemStack(Material.COMPASS ,1));
-                    }
-                  
+                    }                    
                     this.teamManager.addPlayer(r, thePlayer);
                 }
                 sender.sendMessage(ChatColor.GREEN + "Added player to group " + role);

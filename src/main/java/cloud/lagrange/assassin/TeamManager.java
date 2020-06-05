@@ -26,7 +26,7 @@ public class TeamManager {
         }
     }
     
-    public void setInvisibleNameTag(Role teamName) {
+	public void setInvisibleNameTag(Role teamName) {
         Team team = this.board.getTeam(teamName.toString());
         team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
     }

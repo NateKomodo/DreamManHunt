@@ -3,6 +3,7 @@ package cloud.lagrange.assassin;
 import cloud.lagrange.assassin.Models.Role;
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -37,8 +38,22 @@ public class Worker {
                 Player thisPlayer = Bukkit.getPlayer(player.UUID);
                 if (thisPlayer == null) return;
                 Player nearest = getNearestPlayer(thisPlayer);
-                if (nearest == null) return;
-                thisPlayer.setCompassTarget(nearest.getLocation());
+                if (nearest == null) {
+                    // Randomize compass direction if (no player found, e.g. players r in different worlds)
+                	if (Config.compassRandomizeInDifferentWorlds) {
+                    	float angle = (float)(Math.random() * Math.PI * 2);
+                    	float dx = (float)(Math.cos(angle) * 5);
+                    	float dz = (float)(Math.sin(angle) * 5);
+                        thisPlayer.setCompassTarget(thisPlayer.getLocation().add(new Vector(dx, 0, dz)));
+                	}
+            		return;
+                }
+            	thisPlayer.setCompassTarget(nearest.getLocation());
+                // Add direction particle
+                if (Config.compassParticle && thisPlayer.getItemInHand().getType() == Material.COMPASS &&
+                		(thisPlayer.getWorld().getEnvironment() != Environment.NETHER || Config.compassParticleInNether)) {
+                	drawDirection(thisPlayer.getLocation(), nearest.getLocation(), 3);
+                }
             });
         }, 1L, 1L);
     }
@@ -115,5 +130,15 @@ public class Worker {
             if (p1.distance(point1.toVector()) > 1 && p1.distance(p2) > 1) world.spawnParticle(Particle.REDSTONE, p1.getX(), p1.getY(), p1.getZ(), 0, 0, 0, 0, dust);
             length += space;
         }
+    }
+    public void drawDirection(Location point1, Location point2, double space) {
+    	// Draws a single particle in direction of speedrunner (only X & Z coordinates)
+    	World world = point1.getWorld();
+        Validate.isTrue(point2.getWorld().equals(world), "You have to be in same worlds!");
+        Vector p1 = point1.toVector();
+        Vector dir = point2.toVector().clone().subtract(p1).setY(0).normalize().multiply(space);
+        Vector p = p1.add(dir);
+        Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1);
+    	world.spawnParticle(Particle.REDSTONE, p.getX(), p1.getY()+1.25, p.getZ(), 0, 0, 0, 0, dust);
     }
 }
