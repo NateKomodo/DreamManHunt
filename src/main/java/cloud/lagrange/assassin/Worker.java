@@ -1,76 +1,58 @@
 package cloud.lagrange.assassin;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cloud.lagrange.assassin.Models.Role;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import cloud.lagrange.assassin.Models.Role;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Worker {
     public Worker(Assassin parent) {
         parent.getServer().getScheduler().scheduleSyncRepeatingTask(parent, () -> {
             ArrayList<String> frozeThisTick = new ArrayList<>();
-            if (Config.freeze)
-                Global.Players.stream().filter(p -> p.role == Role._SPEEDRUNNER_).forEach(player -> {
-                    Player thisPlayer = Bukkit.getPlayer(player.UUID);
-                    if (thisPlayer == null)
-                        return;
-                    Entity target = getTarget(thisPlayer);
-                    if (target instanceof Player) {
-                        Player playerTarget = (Player) target;
-                        if (Global.Players.stream().anyMatch(
-                                p -> p.role == Role._ASSASSIN_ && p.UUID.equals(playerTarget.getUniqueId()))) {
-                            Global.Players.stream().filter(p -> p.UUID.equals(playerTarget.getUniqueId())).findFirst()
-                                    .get().isFrozen = true;
-                            frozeThisTick.add(playerTarget.getUniqueId().toString());
-                            drawLine(thisPlayer.getEyeLocation(), playerTarget.getEyeLocation(), 1);
-                        }
+            if (Config.freeze) Global.Players.stream().filter(p -> p.role == Role._SPEEDRUNNER_).forEach(player -> {
+                Player thisPlayer = Bukkit.getPlayer(player.UUID);
+                if (thisPlayer == null) return;
+                Entity target = getTarget(thisPlayer);
+                if (target instanceof Player) {
+                    Player playerTarget = (Player) target;
+                    if (Global.Players.stream().anyMatch(p -> p.role == Role._ASSASSIN_ && p.UUID.equals(playerTarget.getUniqueId()))) {
+                        Global.Players.stream().filter(p -> p.UUID.equals(playerTarget.getUniqueId())).findFirst().get().isFrozen = true;
+                        frozeThisTick.add(playerTarget.getUniqueId().toString());
+                        drawLine(thisPlayer.getEyeLocation(), playerTarget.getEyeLocation(), 1);
                     }
-                });
-            Global.Players.stream().filter(p -> p.isFrozen).forEach(player -> {
-                if (!frozeThisTick.contains(player.UUID.toString()))
-                    player.isFrozen = false;
+                }
             });
-            if (Config.compass)
-                Global.Players.stream().filter(p -> p.role == Role._ASSASSIN_).forEach(player -> {
-                    Player thisPlayer = Bukkit.getPlayer(player.UUID);
-                    if (thisPlayer == null)
-                        return;
-                    Player nearest = getNearestPlayer(thisPlayer);
-                    if (nearest == null) {
-                        // Randomize compass direction if (no player found, e.g. players r in different
-                        // worlds)
-                        if (Config.compassRandomizeInDifferentWorlds) {
-                            float angle = (float) (Math.random() * Math.PI * 2);
-                            float dx = (float) (Math.cos(angle) * 5);
-                            float dz = (float) (Math.sin(angle) * 5);
-                            thisPlayer.setCompassTarget(thisPlayer.getLocation().add(new Vector(dx, 0, dz)));
-                        }
-                        return;
-                    }
-                    thisPlayer.setCompassTarget(nearest.getLocation());
+            Global.Players.stream().filter(p -> p.isFrozen).forEach(player -> {
+                if (!frozeThisTick.contains(player.UUID.toString())) player.isFrozen = false;
+            });
+            if (Config.compass) Global.Players.stream().filter(p -> p.role == Role._ASSASSIN_).forEach(player -> {
+                Player thisPlayer = Bukkit.getPlayer(player.UUID);
+                if (thisPlayer == null) return;
+                Player nearest = getNearestPlayer(thisPlayer);
+                if (nearest == null) {
+                    // Randomize compass direction if (no player found, e.g. players r in different worlds)
+                	if (Config.compassRandomizeInDifferentWorlds) {
+                    	float angle = (float)(Math.random() * Math.PI * 2);
+                    	float dx = (float)(Math.cos(angle) * 5);
+                    	float dz = (float)(Math.sin(angle) * 5);
+                        thisPlayer.setCompassTarget(thisPlayer.getLocation().add(new Vector(dx, 0, dz)));
+                	}
+            		return;
+                }
+            	thisPlayer.setCompassTarget(nearest.getLocation());
                 // Add direction particle
-                    if (thisPlayer.getInventory().getItemInMainHand().getType() == Material.COMPASS || thisPlayer.getInventory().getItemInOffHand().getType() == Material.COMPASS){
-                        if (Config.compassParticle &&
-                                (thisPlayer.getWorld().getEnvironment() != Environment.NETHER || Config.compassParticleInNether)) {
-                            drawDirection(thisPlayer.getLocation(), nearest.getLocation(), 3);
-                    }
+                if (Config.compassParticle && thisPlayer.getItemInHand().getType() == Material.COMPASS &&
+                		(thisPlayer.getWorld().getEnvironment() != Environment.NETHER || Config.compassParticleInNether)) {
+                	drawDirection(thisPlayer.getLocation(), nearest.getLocation(), 3);
                 }
             });
         }, 1L, 1L);
