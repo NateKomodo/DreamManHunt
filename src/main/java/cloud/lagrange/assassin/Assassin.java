@@ -1,11 +1,10 @@
 package cloud.lagrange.assassin;
 
-import cloud.lagrange.assassin.Events.Commands;
-import cloud.lagrange.assassin.Events.Events;
-import cloud.lagrange.assassin.TeamManager;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import cloud.lagrange.assassin.Events.Commands;
+import cloud.lagrange.assassin.Events.Events;
 
 public final class Assassin extends JavaPlugin {
 

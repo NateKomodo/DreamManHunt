@@ -1,7 +1,5 @@
 package cloud.lagrange.assassin;
 
-import org.bukkit.configuration.file.FileConfigurationOptions;
-
 public class Config {
     public static boolean instaKill;
     public static boolean freeze;
