@@ -36,6 +36,6 @@ The config is located in Plugins/Assassin/config.yml. It has toggles for differe
 
 On Windows: `mvnw package`
 
-On Linux/Mac: `./mnvw package`
+On Linux/Mac: `./mvnw package`
 
 The compiled jar will be created in the `target` directory
