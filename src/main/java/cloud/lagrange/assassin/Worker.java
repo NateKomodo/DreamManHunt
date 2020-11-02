@@ -33,6 +33,7 @@ public class Worker implements Runnable {
     public void run() {
         Set<Player> frozeThisTick = new HashSet<>();
         if (config.freeze()) {
+            // freeze observed assassins
             for (Player player : playerData.getPlayersByRole(ManHuntRole.SPEEDRUNNER)) {
                 Entity target = getTarget(player);
                 if (target == null || target.getType() != EntityType.PLAYER) continue;
@@ -44,6 +45,7 @@ public class Worker implements Runnable {
             }
         }
 
+        // release assassins which are no longer observed
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             if (playerData.isFrozen(player) && !frozeThisTick.contains(player))
                 playerData.setFrozen(player, false);
@@ -78,7 +80,7 @@ public class Worker implements Runnable {
         }
     }
 
-    public Player getNearestSpeedrunner(Player player) {
+    private Player getNearestSpeedrunner(Player player) {
 
         Location playerLocation = player.getLocation();
 

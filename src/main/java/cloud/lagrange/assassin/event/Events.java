@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -78,5 +79,10 @@ public class Events implements Listener {
         Player player = e.getPlayer();
         if (config.giveCompass() && playerData.getRole(player) == ManHuntRole.ASSASSIN)
             player.getInventory().addItem(new ItemStack(Material.COMPASS));
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+        playerData.reset(event.getPlayer());
     }
 }

@@ -9,10 +9,19 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Instance of this class contains data per player, such as player's team, and if they are frozen or not
+ */
 public class PlayerData {
 
     private final Map<Player, PlayerDetails> players = new HashMap<>();
 
+    /**
+     * Get players with given role
+     *
+     * @param role role of players to be returned
+     * @return list of players with given role
+     */
     public List<Player> getPlayersByRole(ManHuntRole role) {
         return players.entrySet().stream()
                 .filter(e -> e.getValue().role == role)
@@ -26,12 +35,24 @@ public class PlayerData {
                 .orElse(false);
     }
 
+
+    /**
+     * get role of player (assassin/speedrunner)
+     *
+     * @param player player
+     * @return role of given player, or null player is not assigned to any of the teams
+     */
     public ManHuntRole getRole(Player player) {
         return Optional.ofNullable(players.get(player))
                 .map(PlayerDetails::getRole)
-                .orElse(ManHuntRole.DEFAULT);
+                .orElse(null);
     }
 
+    /**
+     * Remove player's data from memory
+     *
+     * @param player player to be removed
+     */
     public void reset(Player player) {
         players.remove(player);
     }
@@ -50,7 +71,7 @@ public class PlayerData {
 
     private static class PlayerDetails {
         private boolean isFrozen = false;
-        private ManHuntRole role = ManHuntRole.DEFAULT;
+        private ManHuntRole role;
 
         public boolean isFrozen() {
             return isFrozen;

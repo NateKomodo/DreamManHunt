@@ -7,6 +7,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
+/**
+ * Wrapper on server scoreboard
+ */
 public class TeamManager {
 
     private final Scoreboard board;
@@ -27,14 +30,6 @@ public class TeamManager {
         }
     }
 
-    public void setInvisibleNameTag(ManHuntRole teamName) {
-        Team team = this.board.getTeam(teamName.toString());
-        if (team == null)
-            throw new RuntimeException("No team with name " + teamName + " found");
-
-        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-    }
-
     public void addPlayer(ManHuntRole teamName, Player player) {
         Team team = this.board.getTeam(teamName.toString());
         if (team == null)
@@ -49,6 +44,14 @@ public class TeamManager {
             throw new RuntimeException("No team with name " + teamName + " found");
 
         team.removeEntry(player.getName());
+    }
+
+    private void setInvisibleNameTag(ManHuntRole teamName) {
+        Team team = this.board.getTeam(teamName.toString());
+        if (team == null)
+            throw new RuntimeException("No team with name " + teamName + " found");
+
+        team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
     }
 }
 
