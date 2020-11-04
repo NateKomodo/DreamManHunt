@@ -1,13 +1,16 @@
 name: Assassin
 version: ${project.version}
-main: cloud.lagrange.assassin.Assassin
+main: cloud.lagrange.assassin.ManHuntPlugin
 api-version: 1.13
 authors: [NateKomodo]
 description: A replica of the assassin game mode from Dream's video
 commands:
   assassin:
     description: Sets player as assassin for the assassin game mode
-    usage: /assassin <player> [remove]
+    usage: <command> <player> [remove]
   speedrunner:
     description: Sets player as speedrunner for the assassin game mode
-    usage: /speedrunner <player> [remove]
+    usage: <command> <player> [remove]
+  manhunt:
+    description: Show current manhunt teams
+    usage: <command>

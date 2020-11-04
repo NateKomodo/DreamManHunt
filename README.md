@@ -10,6 +10,8 @@ Use command `/assassin <player> [remove]` to add player to (or remove from) assa
 
 Use command `/speedrunner <player> [remove]` to add player to (or remove from) speedrunner's group.
 
+Use command `/manhunt` to view roles (speedrunner/assassin) for all players
+
 `/assassin` without parameters will reload the config.
 
 ##### Config
@@ -28,3 +30,12 @@ The config is located in Plugins/Assassin/config.yml. It has toggles for differe
 `assassins-insta-kill-speedrunner` - true/false, changes if the assassin can one shot the speedrunner
 
 `freeze-assassin-when-seen` - true/false, changes if the assassin will be frozen in place if the speedrunner puts their crosshair over the assassin. Note if frozen in the air, it may trigger a "Flying is not enabled on the server disconnect", so it is recommended to disable it.
+
+
+## Building
+
+On Windows: `mvnw package`
+
+On Linux/Mac: `./mvnw package`
+
+The compiled jar will be created in the `target` directory
