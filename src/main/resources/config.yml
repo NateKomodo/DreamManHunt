@@ -1,6 +1,6 @@
 assassins-insta-kill-speedrunner: false
 compass-tracking: true
-compass-give: false
+compass-give: true
 compass-particle: true
 compass-particle-in-nether: false
 compass-random-different-worlds: true
