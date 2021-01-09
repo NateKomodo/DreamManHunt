@@ -16,8 +16,10 @@ assignees: ''
 ---
 
 ## Some information
-Operating system:
-Java version:
+Operating system (client): 
+Java version (client): 
+Operating system (server): 
+Java version (server): 
 Minecraft version:
 Plugin version: 
 Forge mods (if used): 
