@@ -19,8 +19,9 @@ assignees: ''
 Operating system:
 Java version:
 Minecraft version:
-Baritone version:
+Plugin version: 
 Forge mods (if used): 
+Other plugins (if used): 
 
 ## Exception, error or logs
 Please find your `latest.log` attach it to the issue
