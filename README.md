@@ -2,7 +2,7 @@
 A recreation of the man hunt / assassin game mode featured in some of Dreams videos.
 
 ## Installation
-Download the latest releast from the releases tab and put it in your plugins folder.
+Download the latest release from the releases tab and put it in your plugins folder.
 
 ## Usage
 ##### Commands
