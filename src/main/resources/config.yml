@@ -5,3 +5,4 @@ compass-particle: true
 compass-particle-in-nether: false
 compass-random-different-worlds: true
 freeze-assassin-when-seen: false
+track-portals: false
