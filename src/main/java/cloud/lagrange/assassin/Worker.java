@@ -1,5 +1,6 @@
 package cloud.lagrange.assassin;
 
+import cloud.lagrange.assassin.event.Events;
 import cloud.lagrange.assassin.model.ManHuntRole;
 import org.apache.commons.lang.Validate;
 import org.bukkit.*;
@@ -62,18 +63,29 @@ public class Worker implements Runnable {
         Player nearest = getNearestSpeedrunner(player);
         if (nearest == null) {
             // Randomize compass direction if no player found, e.g. players r in different worlds
-            if (config.isCompassRandomizeInDifferentWorlds()) {
+            if (config.isCompassRandomizeInDifferentWorlds() && !config.isTrackPortals()) {
                 float angle = (float) (Math.random() * Math.PI * 2);
                 float dx = (float) (Math.cos(angle) * 5);
                 float dz = (float) (Math.sin(angle) * 5);
                 player.setCompassTarget(player.getLocation().add(new Vector(dx, 0, dz)));
             }
-        } else {
+            else if(!config.isCompassRandomizeInDifferentWorlds() && config.isTrackPortals() && Events.getLastPlayerLocation() != null){
+                player.setCompassTarget(Events.getLastPlayerLocation());
+                PlayerInventory inventory = player.getInventory();
+                if (inventory.getItemInMainHand().getType().equals(Material.COMPASS) || inventory.getItemInOffHand().getType().equals(Material.COMPASS)) {
+                    if (config.isCompassParticle() &&
+                            (player.getWorld().getEnvironment() != Environment.NETHER || config.isCompassParticleInNether())) {
+                        drawDirection(player.getLocation(), Events.getLastPlayerLocation(), 3);
+                    }
+                }
+            }
+        } 
+        else {
             player.setCompassTarget(nearest.getLocation());
             PlayerInventory inventory = player.getInventory();
-            if (inventory.getItemInMainHand().getType() == Material.COMPASS || inventory.getItemInOffHand().getType() == Material.COMPASS) {
+            if (inventory.getItemInMainHand().getType().equals(Material.COMPASS) || inventory.getItemInOffHand().getType().equals(Material.COMPASS)) {
                 if (config.isCompassParticle() &&
-                        (player.getWorld().getEnvironment() != Environment.NETHER || config.isCompassParticleInNether())) {
+                        (!player.getWorld().getEnvironment().equals(Environment.NETHER) || config.isCompassParticleInNether())) {
                     drawDirection(player.getLocation(), nearest.getLocation(), 3);
                 }
             }
@@ -86,7 +98,7 @@ public class Worker implements Runnable {
 
         return plugin.getServer().getOnlinePlayers().stream()
                 .filter(p -> !p.equals(player))
-                .filter(p -> playerData.getRole(p) == ManHuntRole.SPEEDRUNNER)
+                .filter(p -> playerData.getRole(p).equals(ManHuntRole.SPEEDRUNNER))
                 .filter(p -> p.getWorld().equals(player.getWorld()))
                 .min(Comparator.comparing(p -> p.getLocation().distance(playerLocation)))
                 .orElse(null);
@@ -112,7 +124,7 @@ public class Worker implements Runnable {
         // loop through player's line of sight
         while (bItr.hasNext()) {
             block = bItr.next();
-            if (block.getType() != Material.AIR && block.getType() != Material.WATER) break;
+            if (!block.getType().equals(Material.AIR) && !block.getType().equals(Material.WATER)) break;
             bx = block.getX();
             by = block.getY();
             bz = block.getZ();

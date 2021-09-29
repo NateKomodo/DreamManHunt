@@ -14,6 +14,7 @@ public class Config {
     private boolean compassParticle;
     private boolean compassParticleInNether;
     private boolean compassRandomizeInDifferentWorlds;
+    private boolean trackPortals;
 
     public Config(Plugin plugin) {
         this.plugin = plugin;
@@ -36,6 +37,7 @@ public class Config {
         compassParticleInNether = config.getBoolean("compass-particle-in-nether");
         compassRandomizeInDifferentWorlds = config.getBoolean("compass-random-different-worlds");
         freeze = config.getBoolean("freeze-assassin-when-seen");
+        trackPortals = config.getBoolean("track-portals");
     }
 
     /**
@@ -85,5 +87,12 @@ public class Config {
      */
     public boolean isCompassRandomizeInDifferentWorlds() {
         return compassRandomizeInDifferentWorlds;
+    }
+
+    /**
+     * @return true, if compass should track speedrunners last location after portal entry
+     */
+    public boolean isTrackPortals() {
+        return trackPortals;
     }
 }

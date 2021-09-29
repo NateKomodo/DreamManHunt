@@ -31,6 +31,8 @@ The config is located in Plugins/Assassin/config.yml. It has toggles for differe
 
 `freeze-assassin-when-seen` - true/false, changes if the assassin will be frozen in place if the speedrunner puts their crosshair over the assassin. Note if frozen in the air, it may trigger a "Flying is not enabled on the server disconnect", so it is recommended to disable it.
 
+`track-portals` - true/false, if true the compass will track the last known location of a speedrunner before it enters another dimension
+
 
 ## Building
 
