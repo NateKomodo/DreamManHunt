@@ -13,14 +13,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public class AssasinCommand implements CommandExecutor {
+public class AssassinCommand implements CommandExecutor {
 
     private final Plugin plugin;
     private final TeamManager teamManager;
     private final PlayerData playerData;
     private final Config config;
 
-    public AssasinCommand(Plugin plugin, TeamManager teamManager, PlayerData playerData, Config config) {
+    public AssassinCommand(Plugin plugin, TeamManager teamManager, PlayerData playerData, Config config) {
         this.plugin = plugin;
         this.teamManager = teamManager;
         this.playerData = playerData;

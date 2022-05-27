@@ -1,6 +1,6 @@
 package cloud.lagrange.assassin;
 
-import cloud.lagrange.assassin.command.AssasinCommand;
+import cloud.lagrange.assassin.command.AssassinCommand;
 import cloud.lagrange.assassin.command.ManHuntCommand;
 import cloud.lagrange.assassin.command.SpeedrunnerCommand;
 import cloud.lagrange.assassin.event.Events;
@@ -19,7 +19,7 @@ public final class ManHuntPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Events(playerData, config), this);
 
         Optional.ofNullable(getCommand("assassin"))
-                .ifPresent(c -> c.setExecutor(new AssasinCommand(this, manager, playerData, config)));
+                .ifPresent(c -> c.setExecutor(new AssassinCommand(this, manager, playerData, config)));
         Optional.ofNullable(getCommand("speedrunner"))
                 .ifPresent(c -> c.setExecutor(new SpeedrunnerCommand(this, manager, playerData)));
         Optional.ofNullable(getCommand("manhunt"))
