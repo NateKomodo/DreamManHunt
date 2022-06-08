@@ -2,7 +2,7 @@ package cloud.lagrange.assassin;
 
 import cloud.lagrange.assassin.event.Events;
 import cloud.lagrange.assassin.model.ManHuntRole;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
