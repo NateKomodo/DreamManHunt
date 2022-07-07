@@ -5,6 +5,6 @@
 (Description here)
 
 # Checkbox
-[x] I can use checkboxes
-[ ] I have included editor files in gitignore
-[ ] I have followed all style guidelines
+- [x] I can use checkboxes
+- [ ] I have included editor files in .gitignore
+- [ ] I have followed all style guidelines
