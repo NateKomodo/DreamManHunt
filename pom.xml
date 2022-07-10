@@ -6,7 +6,7 @@
 
     <groupId>cloud.lagrange</groupId>
     <artifactId>Assassin</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.3</version>
     <packaging>jar</packaging>
 
     <name>Assassin</name>
